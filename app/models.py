@@ -5,7 +5,6 @@ Contains Databse model classes
 from hashlib import md5
 from datetime import datetime
 from flask import current_app
-from sqlalchemy.orm import backref
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import db, login
@@ -70,6 +69,9 @@ class User(UserMixin, db.Model):
             followers.c.followed_id == user.id).count() > 0
 
     def followed_posts(self):
+        """
+        Get posts from followed users
+        """
         followed = Post.query.join(
             followers, (followers.c.followed_id == Post.user_id)).filter(
                 followers.c.follower_id == self.id)
