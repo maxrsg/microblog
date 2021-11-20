@@ -1,13 +1,13 @@
-FROM python:3.8
+FROM python:3.8-alpine
 
 WORKDIR /home/microblog
 
 COPY requirements requirements
-COPY test.sh .
+COPY requirements.txt microblog.py test.sh ./
 
-RUN python -m venv .venv 
-RUN .venv/bin/pip3 install -r requirements/test.txt 
-RUN .venv/bin/pip3 install py pytest coverage pylint 
-RUN chmod +x test.sh
+RUN python -m venv .venv
+RUN apk add build-base=0.5-r2 --no-cache && \
+    .venv/bin/pip3 install -r requirements/test.txt && \
+    chmod +x test.sh
 
-ENTRYPOINT ["./test.sh" ]
+ENTRYPOINT ["./test.sh"]
