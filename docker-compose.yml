@@ -11,9 +11,9 @@ services:
     restart: 
       'always'
     
-  mysql:
+  dbserver:
     image: mysql/mysql-server:5.7
-    container_name: mysql
+    container_name: dbserver
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=microblog
